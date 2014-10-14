@@ -1,0 +1,37 @@
+/*
+#thumber-admin {
+    border: 1px solid #ddd;
+    position: relative;
+    overflow: hidden;
+}
+#thumber-admin #thumber-size {
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #ddd;
+    background-color: rgba(255, 255, 255, .7);
+}
+*/
+#thumber-admin {
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+#thumber-drag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(221, 221, 221, 0.5);
+    cursor: move;
+}
+#thumber-size {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #333;
+    /*background-color: #ddd;*/
+    padding: 5px;
+}
