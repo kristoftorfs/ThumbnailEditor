@@ -18,6 +18,15 @@ class Thumbnail {
         if ($int !== false) $ret = (int)$ret;
         return $ret;
     }
+
+    /**
+     * Constructor.
+     *
+     * @param NetDesign $module The module associated with the thumbnail.
+     * @param $uid The unique identifier for this thumbnail (and module).
+     * @param int $width The thumbnail width.
+     * @param int $height The thumbnail height.
+     */
     public function __construct(NetDesign $module, $uid, $width = 200, $height = 120) {
         $this->module = $module;
         $this->moduleName = get_class($module);
@@ -40,42 +49,117 @@ class Thumbnail {
             else $this->$prop = $value;
         }
     }
+
+    /**
+     * Returns the associated module.
+     *
+     * @return NetDesign
+     */
     public function GetModule() {
         return $this->GetProperty('module', false);
     }
+
+    /**
+     * Returns the name of the associated module.
+     *
+     * @return string
+     */
     public function GetModuleName() {
         return $this->GetProperty('moduleName', false);
     }
+
+    /**
+     * Returns the (original) filename of the uploaded image.
+     *
+     * @return string
+     */
     public function GetFileName() {
         return $this->GetProperty('filename', false);
     }
+
+    /**
+     * Returns the unique identifier for this thumbnail.
+     *
+     * @return string
+     */
     public function GetUid() {
         return $this->GetProperty('uid', false);
     }
+
+    /**
+     * Returns the width of the resulting thumbnail.
+     *
+     * @return int
+     */
     public function GetConfigWidth() {
         return $this->GetProperty('configWidth');
     }
+
+    /**
+     * Returns the height of the resulting thumbnail.
+     *
+     * @return int
+     */
     public function GetConfigHeight() {
         return $this->GetProperty('configHeight');
     }
     public function GetOriginalWidth() {
         return $this->GetProperty('originalWidth');
     }
+
+    /**
+     * Returns the height of the originally uploaded image.
+     *
+     * @return int
+     */
     public function GetOriginalHeight() {
         return $this->GetProperty('originalHeight');
     }
+
+    /**
+     * Returns the width to which the thumbnail should be resized before cropping.
+     *
+     * @return int
+     */
     public function GetCropWidth() {
         return $this->GetProperty('cropWidth');
     }
+
+    /**
+     * Returns the height to which the thumbnail should be resized before cropping.
+     *
+     * @return int
+     */
     public function GetCropHeight() {
         return $this->GetProperty('cropHeight');
     }
+
+    /**
+     * Returns the X-position at which to crop (after resizing).
+     *
+     * @return int
+     */
     public function GetCropX() {
         return $this->GetProperty('cropX');
     }
+
+    /**
+     * Returns the Y-position at which to crop (after resizing).
+     *
+     * @return int
+     */
     public function GetCropY() {
         return $this->GetProperty('cropY');
     }
+
+    /**
+     * Updates the thumbnail.
+     *
+     * @param int $width The width to which the image should be resized before cropping.
+     * @param int $height The height to which the thumbnail should be resized before cropping.
+     * @param int $x The X-position at which to crop after resizing.
+     * @param int $y The Y-position at which to crop after resizing.
+     */
     public function Crop($width, $height, $x, $y) {
         $this->cropWidth = (int)$width;
         $this->cropHeight = (int)$height;
@@ -111,6 +195,10 @@ class Thumbnail {
         @unlink($fn);
         imagejpeg($im3, $fn);
     }
+
+    /**
+     * Perform auto cropping, this will resize the image to the minimum needed dimensions, and then crop the center of the image.
+     */
     public function CropAuto() {
         $width = $this->GetOriginalWidth();
         $height = $this->GetOriginalHeight();
@@ -121,20 +209,51 @@ class Thumbnail {
         $y = (int)(($height - $this->GetConfigHeight()) / 2);
         $this->Crop($width, $height, $x, $y);
     }
+
+    /**
+     * Returns the filesystem path to the originally uploaded image.
+     *
+     * @return string
+     */
     public function GetOriginalPath() {
         return cms_join_path(ThumbnailEditor::GetInstance()->GetModuleUploadsPath(), $this->GetModuleName(), $this->GetUid(), 'original', $this->GetFileName());
     }
+
+    /**
+     * Returns the filesystem path to the thumbnail image.
+     *
+     * @return string
+     */
     public function GetThumbnailPath() {
         return cms_join_path(ThumbnailEditor::GetInstance()->GetModuleUploadsPath(), $this->GetModuleName(), $this->GetUid(), 'thumbnail', $this->GetFileName());
     }
+
+    /**
+     * Returns the URL to the originally uploaded image.
+     *
+     * @return string
+     */
     public function GetOriginalUrl() {
         if (!is_file($this->GetOriginalPath())) return '';
         return cms_join_path(ThumbnailEditor::GetInstance()->GetModuleUploadsUrl(), $this->GetModuleName(), $this->GetUid(), 'original', $this->GetFileName()) . '?dt=' . (int)(microtime(true) * 1000);
     }
+
+    /**
+     * Returns the URL to the thumbnail image.
+     *
+     * @return string
+     */
     public function GetThumbnailUrl() {
         if (!is_file($this->GetThumbnailPath())) return '';
         return cms_join_path(ThumbnailEditor::GetInstance()->GetModuleUploadsUrl(), $this->GetModuleName(), $this->GetUid(), 'thumbnail', $this->GetFileName()) . '?dt=' . (int)(microtime(true) * 1000);
     }
+
+    /**
+     * Uploads a new image.
+     *
+     * @param string $source The filesystem path to the image.
+     * @param null|string $filename The destination filename. If omitted the filename of $source will be used.
+     */
     public function Upload($source, $filename = null) {
         // Remove previous files
         $or = $this->GetOriginalPath();
