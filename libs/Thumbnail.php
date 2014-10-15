@@ -18,6 +18,9 @@ class Thumbnail {
         if ($int !== false) $ret = (int)$ret;
         return $ret;
     }
+    private function GetSiteId() {
+        return NetDesign::GetInstance()->GetSiteId();
+    }
 
     /**
      * Constructor.
@@ -269,5 +272,14 @@ class Thumbnail {
         list($this->originalWidth, $this->originalHeight) = getimagesize($path);
         // Create the default thumbnail
         $this->CropAuto();
+    }
+
+    /**
+     * Returns TRUE if a thumbnail has been uploaded, FALSE otherwise.
+     *
+     * @return bool
+     */
+    public function HasThumbnail() {
+        return is_file($this->GetThumbnailPath());
     }
 }
