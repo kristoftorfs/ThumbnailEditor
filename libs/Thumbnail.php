@@ -282,4 +282,13 @@ class Thumbnail {
     public function HasThumbnail() {
         return is_file($this->GetThumbnailPath());
     }
+
+    /**
+     * Short for GetThumbnailUrl().
+     *
+     * @return string
+     */
+    public function url() {
+        return $this->GetThumbnailUrl();
+    }
 }
