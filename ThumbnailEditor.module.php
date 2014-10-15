@@ -59,9 +59,10 @@ class ThumbnailEditor extends NetDesign {
         return false;
     }
 
-    public function EditorInit(NetDesign $module, $action, $actionid, $uid, $width = 200, $height = 120, $params = array()) {
+    public function EditorInit(NetDesign $module, NetDesign $owner, $action, $actionid, $uid, $width = 200, $height = 120, $params = array()) {
         $this->init = array(
             'module' => $module,
+            'owner' => $owner,
             'action' => $action,
             'actionid' => $actionid,
             'uid' => $uid,
@@ -69,7 +70,7 @@ class ThumbnailEditor extends NetDesign {
             'height' => (int)$height,
             'params' => (array)$params
         );
-        $this->thumb = new Thumbnail($module, $this->init['uid'], $this->init['width'], $this->init['height']);
+        $this->thumb = new Thumbnail($owner, $this->init['uid'], $this->init['width'], $this->init['height']);
     }
 
     public function EditorProcess() {

@@ -11,6 +11,7 @@ There are three class methods required to implement this inside your module, and
 The method ```EditorInit``` is used to initialize the editor. Arguments for the method are the following:
 
 - _module_: reference to the module implementing the editor (this must be a NetDesign module).
+- _owner_: reference to the module owning the thumbnail (this must be a NetDesign module).
 - _action_: the module action implementing the editor.
 - _actionid_: the actionid ($id).
 - _uid_: a unique identifier for the thumbnail currently being edited.
