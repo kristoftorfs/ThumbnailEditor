@@ -94,7 +94,6 @@ class ThumbnailEditor extends NetDesign {
     }
 
     public function EditorDisplay() {
-        cms_module_Lang($this);
         /** @var NetDesign $module */
         $module = $this->init['module'];
         $action = $this->init['action'];
