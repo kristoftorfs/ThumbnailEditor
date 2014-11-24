@@ -14,7 +14,7 @@
 <div class="pageoverflow">
     <p class="pageinput" id="thumber-user-config">
         {$form.submit}{$form.cancel}{$form.apply}
-        {$lang.config|escape}: width=<span>{$thumb->GetCropWidth()}</span>,height=<span>{$thumb->GetCropHeight()}</span>;x<span>{$thumb->GetCropX()}</span>=,y=<span>{$thumb->GetCropY()}</span>
+        {$lang.config|escape}: <span>{$thumb->GetCropWidth()}</span>x<span>{$thumb->GetCropHeight()}</span>; <span>{$thumb->GetCropX()}</span>x<span>{$thumb->GetCropY()}</span>
     </p>
 </div>
 <div class="pageoverflow">
